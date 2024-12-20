@@ -43,9 +43,29 @@ function isSave($report)
   return true;
 }
 
+function isSaveWithBuffer($report)
+{
+  for ($i = 0; $i < count($report); $i++) {
+    $tmp = array_values($report);
+    unset($tmp[$i]);
+    $tmp = array_values($tmp);
+
+    if (isSave($tmp)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 $result = 0;
 foreach ($reports as $report) {
   if (isSave($report)) {
+    $result++;
+    continue;
+  }
+
+  if (isSaveWithBuffer($report)) {
     $result++;
   }
 }
